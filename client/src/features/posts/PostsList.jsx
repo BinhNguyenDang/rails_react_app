@@ -1,14 +1,13 @@
 // API_URL comes from the .env.development file
 import React, { useState, useEffect } from "react";
-import { deletePost as deletePostService, fetchAllPosts } from "../../services/postService";
+import { deletePost , fetchAllPosts } from "../../services/postService";
 import { Link } from "react-router-dom";
 
 function PostsList() {
   const [posts, setPosts] = useState([]);
   const [, setLoading] = useState(true);
   const [, setError] = useState(null);
-  // Fetch posts from the API
-  console.log("Fetching data from:");
+ 
   useEffect(() => {
     async function loadPosts() {
       try {
@@ -23,9 +22,9 @@ function PostsList() {
     loadPosts();
   }, []);
 
-  const deletePost = async (id) => {
+  const deletePostHandler = async (id) => {
     try {
-      await deletePostService(id);
+      await deletePost(id);
       setPosts(posts.filter((p) => p.id!== id));
     } catch (err){
       console.error("An error occurred:", err);
@@ -44,7 +43,7 @@ function PostsList() {
           <div className="post-links">
             <Link to={`/posts/${post.id}/edit`}>Edit</Link>
             {" | "}
-            <button onClick={() => deletePost(post.id)}>Delete</button>
+            <button onClick={() => deletePostHandler(post.id)}>Delete</button>
           </div>
         </div>
       ))}
