@@ -1,6 +1,4 @@
-// Posts list link (root Path) | link to creat new Post (Post Form)
-
-import React from "react";
+ 
 import { Link } from "react-router-dom";
 
 function NavBar(){
@@ -8,7 +6,7 @@ function NavBar(){
         <nav>
             <Link to="/">Posts List</Link>
             {" | "}
-            <Link to="/new">New Post</Link>
+            <Link to="/new">Create New Post</Link>
         </nav>
     );
 }
