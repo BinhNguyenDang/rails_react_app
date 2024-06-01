@@ -17,6 +17,7 @@ function PostsList() {
       } catch (e) {
         setError(e);
         setLoading(false);
+        console.error("Failed to fetch posts: ", e);
       }
     }
     loadPosts();
@@ -27,7 +28,7 @@ function PostsList() {
       await deletePost(id);
       setPosts(posts.filter((p) => p.id!== id));
     } catch (err){
-      console.error("An error occurred:", err);
+      console.error("Failed to delete the post: ", err);
     }
   }
 
