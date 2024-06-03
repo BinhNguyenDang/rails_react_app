@@ -16,6 +16,7 @@ function EditPostForm() {
                 const json = await fetchPost(id);
                 setPost(json);
             } catch (err) {
+                console.error("Failed to fetch the post: ", err);
                 setError(err);
             } finally {
                 setLoading(false);
@@ -33,7 +34,7 @@ function EditPostForm() {
         try {
             const response = await updatePost(id, updatedPost);
             console.log(response);
-            navigate(`/posts/${response.id}`);
+            navigate(`/posts/${id}`);
 
         } catch(e){
             console.error("Failed to update the post: ", e);
