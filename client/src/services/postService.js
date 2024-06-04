@@ -19,10 +19,12 @@ async function fetchPost(id){
 async function createPost(postData){
     const response = await fetch(`${API_URL}`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
+        //Does not need headers because its a formData
+        // headers: {
+        //     "Content-Type": "application/json",
+        // },
+
+        body: postData,
     });
     if(!response.ok){
         throw new Error(response.statusText);
