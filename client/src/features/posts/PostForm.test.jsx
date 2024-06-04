@@ -72,6 +72,7 @@ describe("PostForm Component", () => {
         expect(mockSubmit).toHaveBeenCalledWith({
             title: newTitle,
             body: newBody,
+            image: "",
         });
     });
 });
