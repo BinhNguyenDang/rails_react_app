@@ -34,7 +34,6 @@ function PostsList() {
 
   return (
     <div>
-      <h1>Posts List</h1>
       {posts.map((post) => (
         <div key={post.id} className="post-container">
           

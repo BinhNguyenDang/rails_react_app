@@ -1,9 +1,8 @@
 import { render, waitFor, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { fetchPost, updatePost } from "../../services/postService";
-import { act } from "react";
 import PostEditForm from "./PostEditForm";
-import { TestEnvironment } from "jest-environment-jsdom";
+
 
 jest.mock("../../services/postService", () => ({
     fetchPost: jest.fn(),
@@ -67,7 +66,7 @@ describe("PostEditForm component", () => {
         });
 
         await waitFor( async () => {
-            fireEvent.click(screen.getByText(/save/i));
+            fireEvent.click(screen.getByText(/Update Post/i));
         });
 
         await waitFor(() => {
@@ -88,7 +87,7 @@ describe("PostEditForm component", () => {
         renderForm();
 
         await waitFor(() => {
-            fireEvent.click(screen.getByText(/save/i));
+            fireEvent.click(screen.getByText(/Update Post/i));
         });
 
         await waitFor(() => {

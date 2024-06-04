@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchPost, updatePost } from "../../services/postService";
+import PostForm from "./PostForm";
 
 function EditPostForm() {
     const [post, setPost] = useState(null);
@@ -25,15 +26,10 @@ function EditPostForm() {
         fetchCurrentPost();
     }, [id]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const updatedPost = {
-            title: post.title,
-            body: post.body
-        };
+    const handleUpdateSubmit = async (formData) => {
         try {
-            const response = await updatePost(id, updatedPost);
-            console.log(response);
+            await updatePost(id, formData);
+            
             navigate(`/posts/${id}`);
 
         } catch(e){
@@ -44,35 +40,13 @@ function EditPostForm() {
     };
     if (!post) return <h2>Loading ...</h2>;
     return (
-        <div>
-            <h2>Edit Post</h2>
-
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="post-title">Title</label>
-                    <br />
-                    <input 
-                        type="text"
-                        id="post-title"
-                        value={post.title}
-                        onChange={(e) => setPost({ ...post, title: e.target.value })}
-                     />
-                </div>
-                <div>
-                    <label htmlFor="post-body">Body</label>
-                    <br />
-                    <textarea 
-                        id="post-body"
-                        value={post.body}
-                        onChange={(e) => setPost({...post, body: e.target.value })}
-                    />
-                </div>
-                <div>
-                    <button type="submit">Save</button>
-                </div>
-            </form>
-        </div>
-    )
+       <PostForm 
+        post={post}
+        onSubmit={handleUpdateSubmit}
+        headerText="Edit Post"
+        buttonText="Update Post"
+       />
+    );
 }
 
 export default EditPostForm
