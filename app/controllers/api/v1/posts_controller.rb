@@ -7,9 +7,9 @@ class Api::V1::PostsController < ApplicationController
 
     posts_with_images = @posts.map do |post|
       if post.image.attached?
-        post.as_json.merge(image_image: url_for(post.image))
+        post.as_json.merge(image_url: url_for(post.image))
       else
-        post.as_json.merge(image_image: nil)
+        post.as_json.merge(image_url: nil)
       end
     end
 
