@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { deletePost } from "../../services/postService";
 import { Link } from "react-router-dom";
 import "./PostImage.css";
+
 import SearchBar from "./SearchBar";
 import usePostsData from "../../hooks/usePostsData";
 import useURLSearchParam from "../../hooks/useURLSearchParam.js";
