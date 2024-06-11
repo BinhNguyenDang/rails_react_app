@@ -1,22 +1,30 @@
 // API_URL comes from the .env.development file
 import { useState, useEffect } from "react";
 import { deletePost } from "../../services/postService";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "./PostImage.css";
+
 import SearchBar from "./SearchBar";
 import usePostsData from "../../hooks/usePostsData";
 import useURLSearchParam from "../../hooks/useURLSearchParam.js";
+import Pagination from "./Pagination.jsx";
 
 function PostsList() {
-  const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useURLSearchParam("search");
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const initialPageFromURL = Number(searchParams.get("page") || "1");
+  const [currentPage, setCurrentPage] = useState(initialPageFromURL);
+
+  const [posts, setPosts] = useState([]);
   const {
     posts: fetchedPosts,
+    totalPosts,
     loading,
     error,
-  } = usePostsData(debouncedSearchTerm);
+    perPage,
+  } = usePostsData(debouncedSearchTerm, currentPage);
  
   useEffect(() => {
     if(fetchedPosts){
@@ -24,6 +32,14 @@ function PostsList() {
     }
   }, [fetchedPosts]);
   console.log("test");
+
+  useEffect(() => {
+    const initialSearchTerm = searchParams.get("search") || "";
+    setSearchTerm(initialSearchTerm);
+
+    const pageFromURL = searchParams.get("page") || "1";
+    setCurrentPage(Number(pageFromURL));
+  }, [searchParams]);
 
   const deletePostHandler = async (id) => {
     try {
@@ -36,11 +52,18 @@ function PostsList() {
 
   const handleImmediateSearchChange = (searchValue) => {
     setSearchTerm(searchValue);
-  }
+  };
 
   const handleDebouncedSearchChange = (searchValue) => {
     setDebouncedSearchTerm(searchValue);
-  }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    
+    //Update the URL to include the page number
+    setSearchParams({ search: debouncedSearchTerm, page: page });
+  };
 
   return (
     <div>
@@ -48,6 +71,12 @@ function PostsList() {
       value={searchTerm}
       onSearchChange={handleDebouncedSearchChange}
       onImmediateChange={handleImmediateSearchChange}
+      />
+      <Pagination
+      currentPage={currentPage}
+      totalPosts={totalPosts}
+      postsPerPage={perPage}
+      onPageChange={handlePageChange}
       />
       {loading && <p>Loading...</p>}
       {error && <p>Error loading posts.</p>}  
