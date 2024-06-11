@@ -7,6 +7,7 @@ import "./PostImage.css";
 import SearchBar from "./SearchBar";
 import usePostsData from "../../hooks/usePostsData";
 import useURLSearchParam from "../../hooks/useURLSearchParam.js";
+import Pagination from "./Pagination.jsx";
 
 function PostsList() {
   const [posts, setPosts] = useState([]);
@@ -49,6 +50,12 @@ function PostsList() {
       value={searchTerm}
       onSearchChange={handleDebouncedSearchChange}
       onImmediateChange={handleImmediateSearchChange}
+      />
+      <Pagination
+      currentPage={currentPage}
+      totalPosts={totalPosts}
+      postsPerPage={perPage}
+      onPageChange={handlePageChange}
       />
       {loading && <p>Loading...</p>}
       {error && <p>Error loading posts.</p>}  
