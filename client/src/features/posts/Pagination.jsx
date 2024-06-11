@@ -46,7 +46,7 @@ function Pagination({ currentPage, totalPosts, postsPerPage, onPageChange }) {
                 Previous
             </button>
 
-            {getVisiblePageNumbers().map((page, index) => {
+            {getVisiblePageNumbers().map((page, index) => 
                 typeof page === 'number' ? (
                     <button
                     key={page}
@@ -60,7 +60,7 @@ function Pagination({ currentPage, totalPosts, postsPerPage, onPageChange }) {
                         {page}
                     </span>
                 )
-            })}
+            )}
             <button onClick={handleNext} disabled={currentPage == totalPages || totalPages == 0}>
                 Next
             </button>
